@@ -1,0 +1,139 @@
+Now that we have our database configured and populated, it's time to set
+up our service layer. Before we do this, it's important to understand
+the two main data-handling "artifacts" provided by the Grails framework.
+
+1.  *Controllers*: Grails is a MVC framework, where "C" stands for
+Controller. In an MVC app, controllers define the logic of the web
+application, and manage the communication between the model and the
+view. Controllers respond to _requests_, interact with data from the
+model, and then _respond_ with either a view (HTML page) or some other
+consumable format (such as JSON). Controllers are Groovy classes located
+in `grails-app/controller`
+2.  *Services*: Many times we need to do more with our data than simply
+take a request and return a response. Real-world apps typically include
+a substantial amount of code dedicated to "business logic". Grails
+supports "services" which are classes that have full access to the
+model, but are not tied to a request. Controllers, as well as other
+parts of your app, can call services (which are made available via
+Spring’s dependency injection) to get back the data they need to respond
+to their requests. Services are Groovy classes located in
+`grails-app/service` and can be injected by name into other Grails
+artifacts.
+
+To implement our RESTful API in our app, we'll use controllers to
+respond to API requests (POST, GET, PUT, DELETE), and services to handle
+our "business logic" (which is pretty simple in our case). Let's start
+with a controller:
+
+[source,bash]
+----
+~ cd server
+~ ./grailsw create-restful-controller ice.cream.IceCream
+----
+
+Note that we are using the `create-restful-controller` command, which is
+provided by the `rest-api` Grails profile. The generated controller
+inherits from the `RestfulController` class, which implements all the
+standard RESTful endpoints for us.
+
+[source,groovy]
+./server/server/grails-app/controllers/ice/cream/IceCreamController.groovy
+----
+package ice.cream
+
+import grails.rest.*
+import grails.converters.*
+
+class IceCreamController extends RestfulController {
+    static responseFormats = ['json', 'xml']
+    IceCreamController() {
+        super(IceCream)
+    }
+}
+----
+
+With `RestfulController`, Grails has already taken care of the following
+endpoints for us:
+
+....
+DELETE /iceCream/:id  //deletes iceCream with id
+GET /iceCream/:id     //retrieves iceCream with id
+POST /iceCream/       //save a new iceCream instance
+PUT /iceCream/:id     //update iceCream with id
+....
+
+This is a great start, however to satisfy the requirements of the React
+app, we’ll need to customize our controller quite a bit. Here's our
+complete controller code:
+
+[source,groovy]
+./server/grails-app/controllers/ice/cream/IceCreamController.groovy
+----
+include::{sourceDir}/server/grails-app/controllers/ice/cream/IceCreamController.groovy[]
+----
+
+We now need to create `IceCreamService` and implement the
+`addIceCreamToUser` and `removeIceCreamFromUser` methods.
+
+Again from the `server` directory, run the following command, and edit
+the resulting `IceCreamService.groovy` file with the content below:
+
+[source,bash]
+----
+~ ./grailsw create-service ice.cream.IceCreamService
+----
+
+[source,groovy]
+./server/grails-app/services/ice/cream/IceCreamService.groovy
+----
+include::{sourceDir}/server/grails-app/services/ice/cream/IceCreamService.groovy[]
+----
+
+Thanks to GORM, our persistence code is very expressive and
+self-documenting.
+
+Now we need to create a second controller and service to support user
+signups. From the server directory again, run the following commands:
+
+[source,bash]
+----
+~ ./grailsw create-controller ice.cream.User
+~ ./grailsw create-service ice.cream.User
+----
+
+Again, edit the generated files with the following content:
+
+[source,groovy]
+./server/grails-app/controllers/ice/cream/UserController.groovy
+----
+include::{sourceDir}/server/grails-app/controllers/ice/cream/UserController.groovy[]
+----
+
+[source,groovy]
+./server/grails-app/services/ice/cream/UserService.groovy
+----
+include::{sourceDir}/server/grails-app/services/ice/cream/UserService.groovy[]
+----
+
+Again, GORM makes creating and saving our new `User` instance a breeze!
+
+The last step to completing our API is to update the URL endpoints. In
+the previous “Web App” article, all the API endpoints were prefixed by
+`ice-cream/`. By default, Grails uses a camelcase convention for URLs,
+e.g `iceCream/`. Of course we could update our React code to use this
+convention, but instead, let's edit our `UrlMappings.groovy` file and
+specify our customized endpoint format.
+
+[source,groovy]
+./server/grails-app/controllers/ice/cream/UrlMappings.groovy
+----
+include::{sourceDir}/server/grails-app/controllers/ice/cream/UrlMappings.groovy[]
+----
+
+
+The format of a typical URL mapping is
+`[HTTP method (optional)] “[url]”([controller, action or URI to map to the URL])`
+As you can see URL mappings accept variables (like `$username`) and
+wildcards (`*`), allowing very flexible routing control. See the
+http://docs.grails.org/latest/guide/theWebLayer.html#urlmappings[Grails
+documentation] for more on URL Mappings.

@@ -1,0 +1,18 @@
+gettingStarted: 
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  grails: Grails
+  datasource: Datasource
+  gorm: GORM
+  restServices: REST Services
+  authentication: Authentication
+  ssl: SSL
+  websockets: Websockets
+  react: React
+runningTheApp:
+  title: Running the Application
+  deployment: Deployment
+  summary: Summary

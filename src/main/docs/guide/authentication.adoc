@@ -1,0 +1,71 @@
+Because Grails is based upon Spring Boot, it is compatible with many
+other projects in the Spring Ecosystem. One of the most popular such
+projects is https://projects.spring.io/spring-security/[Spring
+Security]. It provides powerful authentication and access control for
+Java web apps, and supports many authentication methods, from LDAP to
+OAuth2. Even better, there is a set of
+http://plugins.grails.org/plugin/grails/spring-security-core[Grails
+plugins] that make Spring Security a breeze to set up.
+
+Edit `server/build.gradle` again, and add the following two lines:
+`server/build.gradle`
+
+[source, groovy]
+./server/build.gradle
+----
+include::{sourceDir}/server/build.gradle[indent=0,lines=51..52]
+----
+
+We’ve installed the Spring Security REST plugin to support token-based
+RESTful authentication, which is a standard approach in most modern web
+apps.
+
+[[the-spring-security-core-plugin-provides-a-handy-script-to-generate-our-security-configuration.-itll-give-us-a-good-start-from-which-to-customize.]]
+The Spring Security Core plugin provides a handy script to generate our
+security configuration. It’ll give us a good start from which to
+customize.
+
+[IMPORTANT]
+====
+The command we are about to run will generate a new `User`
+domain class, which we will use going forward instead of the class we
+created above. Delete the old file before continuing - don’t worry,
+it’ll be recreated by the next command.
+
+[source,bash]
+----
+rm server/grails-app/domain/ice/cream/User.groovy
+----
+====
+
+Run the following command:
+
+[source,bash]
+----
+./grailsw s2-quickstart ice.cream User Role
+----
+
+This will generate the domain classes and config to get our security
+system working. It will also generate a “listener” which will encrypt
+our `password` field whenever a new `User` is created. Feel free to
+check out the generated code under `server/grails-app/domain`,
+`server/grails-app/conf`, and `server/src/main/groovy`. For now, let’s
+edit our configuration to support token authentication.
+
+Edit `server/grails-app/conf/application.groovy` and replace its
+contents with the following:
+
+
+[source, groovy]
+./server/grails-app/conf/application.groovy
+----
+include::{sourceDir}/server/grails-app/conf/application.groovy[]
+----
+<1> Here we configure the framework to use our domain classes: `User`, `Role`, and `UserRole`
+<2> Permit access to specific URLs
+<3> Set up a “filter chain” which Spring Security
+will use to process our authenticated requests. Please consult the
+https://docs.spring.io/spring-security/site/docs/3.0.x/reference/security-filter-chain.html[Spring
+Security docs] and the
+http://grails-plugins.github.io/grails-spring-security-core/3.2.x/index.html[Grails
+Spring Security plugin] docs for more information.

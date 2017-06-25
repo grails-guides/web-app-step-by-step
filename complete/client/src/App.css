@@ -1,0 +1,101 @@
+.App {
+  text-align: center;
+}
+
+.App button {
+  background-color: white;
+  border: solid lightgray 1px;
+  border-radius: 4px;
+  height: 27px; /* matches input height */
+  margin: 0 5px;
+}
+
+.App .main button {
+  border: none;
+  font-size: 12px;
+  padding: 0;
+}
+
+.App-body {
+  display: inline-block;
+  padding: 20px;
+  text-align: left;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+header {
+  background-color: pink;
+  color: white;
+  font-size: 32px;
+  height: 90px;
+  line-height: 90px;
+  margin: 0;
+  text-align: center;
+}
+
+header button {
+  position: absolute;
+  right: 30px;
+  top: 30px;
+}
+
+.header-img {
+  height: 300px;
+  position: absolute;
+  left: 0;
+}
+
+.ice-cream-entry {
+  margin-bottom: 20px;
+}
+
+.ice-cream-entry input {
+  width: 150px;
+}
+
+.ice-cream-list {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.ice-cream-row {
+  margin-bottom: 10px;
+}
+
+.ice-cream-row button {
+  height: 20px;
+  margin-right: 10px;
+}
+
+input {
+  border: solid lightgray 1px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin: 0 10px;
+  padding: 4px;
+}
+
+.login-form input[type=submit] {
+  background-color: white;
+}
+
+.login-form label {
+  display: inline-block;
+  text-align: right;
+  width: 80px;
+}
+
+.row {
+  align-items: center;
+  display: flex;
+  margin-bottom: 10px;
+}
+.row.submit {
+  justify-content: center;
+}
