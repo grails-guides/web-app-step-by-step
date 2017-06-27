@@ -30,18 +30,27 @@ Here is the complete code for these three classes:
 ----
 include::{sourceDir}/server/src/main/groovy/ice/cream/CustomWebSocketConfig.groovy[]
 ----
+<1> Loads our `allowedOrigin` config property from application.yml
+<2> Configures the websocket connection to accept requests from our client server
 
 [source, groovy]
 ./server/src/main/groovy/ice/cream/TokenCreationEventListener.groovy
 ----
 include::{sourceDir}/server/src/main/groovy/ice/cream/TokenCreationEventListener.groovy[]
 ----
+<1> We are extending a `ApplicationListener` interface, which is part of the Spring Framework and allows us to "listen" to specific application events. In this case, we are listening for `RestTokenCreationEvent`. You can find other events to listen for in the http://alvarosanchez.github.io/grails-spring-security-rest/latest/docs/#_events[Spring Security REST plugin documentation].
+<2> The `withNewSession` method is needed here because our custom class doesn't have access to GORM by default (unlike controllers and services). The `User` domain class is not actually important - we could use any domain class here. `withNewSession` will initiate a GORM/Hibernate session and allow us to query the database and persist changes. See the http://gorm.grails.org/6.1.x/hibernate/manual/index.html#persistenceBasics[GORM documentation for more details.]
 
 [source, groovy]
 ./server/src/main/groovy/ice/cream/SessionExpirationJobHolder.groovy
 ----
 include::{sourceDir}/server/src/main/groovy/ice/cream/SessionExpirationJobHolder.groovy[]
 ----
+<1> This class is provided by the spring-websocket plugin and allows us to push an event over a websocket channel
+<2> Loads our timeout.minutes property from application.yml
+<3> Run method every minute
+<4> Use Groovy's http://docs.groovy-lang.org/latest/html/api/groovy/time/TimeCategory.html[`TimeCategory`] DSL for time operations
+<5> Send a websocket message to a user-specific "channel" for each expired user - we're using their username as the unique key for each channel
 
 With these classes in place, we need to plug them into the Spring
 context by adding them as “beans” in our `resources.groovy` file. Edit
@@ -52,6 +61,10 @@ the file as shown below.
 ----
 include::{sourceDir}/server/grails-app/conf/spring/resources.groovy[]
 ----
+<1> Added by Spring Security Core plugin
+<2> Custom settings for websockets
+<3> Listens for new access tokens and sets the loginDate
+<4> Checks for expired sessions
 
 We have a couple loose ends to tidy up, and then we’ll be done with the
 server.
@@ -68,6 +81,8 @@ file as shown below).
 ----
 include::{sourceDir}/server/grails-app/domain/ice/cream/User.groovy[]
 ----
+<1> We'll use this property to keep track of expired sessions
+<2> "user" is a reserved table in Postgres, so we change the table name to avoid conflicts
 
 
 There’s a lot of code in that class! Almost all of this code was

@@ -8,12 +8,9 @@ including React and PostgresSQL. However, we will see how Grails
 simplifies and accelerates the development process and makes developers
 more productive without giving up finer grain control where needed.
 
-The emphasis of this Guide will not be so much learning how the
+The emphasis of this article will not be so much learning how the
 “innards” of how web applications work, but rather on _developer
 productivity_. In addition, we will refer readers to Mark’s article for
 details on the implementation of the React application, as there we will
 be using almost the exact same code (any changes will be highlighted and
 explained).
-
-The complete sample app is available on GitHub at
-http://github.com/zacharyklein/ice_cream[github.com/zacharyklein/ice_cream]

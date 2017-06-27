@@ -71,6 +71,13 @@ complete controller code:
 ----
 include::{sourceDir}/server/grails-app/controllers/ice/cream/IceCreamController.groovy[]
 ----
+<1> The `@Secured` annotation specifies the access controls for this controller - authentication & ROLE_USER is required
+<2> In a Grails controller you have access to the request parameters in the `params` object -
+here we are checking for a `max` parameter, using the Groovy ternary operator (or "Elvis" operator)
+ `?:` to supply a default max of 10 records, and using the `Math.min` method to limit the maximum
+ number of records to 100.
+<3> The `respond` method uses content-negotiation to determine the appropriate format to respond to the request. See the http://docs.grails.org/latest/ref/Controllers/respond.html[Grails documentation for more details.]
+<4> The `render` method responds to the request without content-negotiation - we're using it here when we have no content to return but need to specify an HTTP error status. See the http://docs.grails.org/latest/ref/Controllers/respond.html[Grails documentation for more details.]
 
 We now need to create `IceCreamService` and implement the
 `addIceCreamToUser` and `removeIceCreamFromUser` methods.
@@ -108,6 +115,9 @@ Again, edit the generated files with the following content:
 ----
 include::{sourceDir}/server/grails-app/controllers/ice/cream/UserController.groovy[]
 ----
+<1> The `@Secured` annotation specifies the access controls for this controller - anonymous access is permitted
+<2> Check for duplicate usernames
+<3> Authenticate the newly created user, and generate the authentication token. This step saves the React app from having to make a second login request after the `/signup` request
 
 [source,groovy]
 ./server/grails-app/services/ice/cream/UserService.groovy

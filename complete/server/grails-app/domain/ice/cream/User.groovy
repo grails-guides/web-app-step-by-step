@@ -13,7 +13,7 @@ class User implements Serializable {
 
     String username
     String password
-    Date lastLogin = null //We'll use this property to keep track of expired sessions
+    Date lastLogin = null //<1>
     boolean enabled = true
     boolean accountExpired
     boolean accountLocked
@@ -30,7 +30,7 @@ class User implements Serializable {
     }
 
     static mapping = {
-        table '`ic_user`' //"user" is a reserved table in Postgres, so we change the table name to avoid conflicts
+        table '`ic_user`' //<2>
 	    password column: '`password`'
     }
 }

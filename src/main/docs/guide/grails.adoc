@@ -55,13 +55,21 @@ your choice, `cd` into the project, and run the following two commands
 ~ ./gradlew client:bootRun
 ----
 
-The `gradlew` command launches the “Gradle Wrapper”, which is provided
-by the Gradle build tool used in all Grails projects since version 3.0.
-The Gradle wrapper will download all needed dependencies (including
-Gradle/Grails) and install them in your project (caching them for future
+The `gradlew` command launches the Gradle "wrapper”, which is provided
+by the Gradle build tool that is used in all Grails projects since Grails 3.0.
+The wrapper is a special script that actually download and install the Gradle
+build tool (if necessary) before running your commands. Gradle will then
+download all needed dependencies (including Grails) and install them in your project (caching them for future
 use as well). This is why you don’t need to install Grails on your
 machine: if your project includes the Gradle wrapper, it will handle
 that for you.
+
+TIP: You can think of Gradle roughly as an alternative to npm (which "does
+not" stand for https://www.npmjs.com[Node Package Manager]). It doesn't
+provide the CLI that npm offers but it fulfills a similar purpose in dependency
+management and build-processing. When a Gradle command (or "task") is run,
+Gradle will first download all dependencies listed in the project's `build.gradle`
+file, similar to running `npm install`.
 
 What about the `server` and `client` portion of those two commands?
 Because we’re using the `react` profile, Grails has actually created two
@@ -78,9 +86,9 @@ subproject. The `bootRun` task is configured in both projects to start
 the respective app.
 
 
-TIP: Where does `bootRun` come from? Grails 3 uses the Spring Boot
-framework under the covers, which provides the `bootRun` task. Of course
-React doesn’t have such a task by default, however the React profile
+TIP: Where does `bootRun` come from? Grails 3 is based on the Spring Boot
+framework under the covers, and this framework provides the `bootRun` Gradle task. Of course
+`create-react-app` doesn’t have such a task, however the React profile
 uses the same name for both “startup” tasks for consistency sake, and to
 support advanced features like running both `server` and `client` in
 parallel mode with one command. `../gradlew client:bootRun` is the same
@@ -98,5 +106,5 @@ Before we continue implementing our application, take a moment to
 explore the app we have right now. The Grails application by default is
 providing some useful metadata in JSON format, and the React app is
 consuming that data via a REST call and displaying it via the app’s
-navigation menus. This isn’t a very useful app, but you can already see
+navigation menus. This isn’t a very useful app, but you can see
 a lot of boilerplate has already been set up for you.

@@ -11,10 +11,10 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry
 class CustomWebSocketConfig extends DefaultWebSocketConfig {
 
     @Value('${allowedOrigin}')
-    String allowedOrigin //Loads our allowedOrigin config property from application.yml
+    String allowedOrigin //<1>
 
     @Override
-    void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) { //Configures the websocket connection to accept requests from our client server
+    void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) { //<2>
         println "registerStompEndpoints with allowedOrigin: ${allowedOrigin}"
         stompEndpointRegistry.addEndpoint("/stomp").setAllowedOrigins(allowedOrigin).withSockJS()
     }

@@ -1,0 +1,1 @@
+The completed sample project for this article can be found at https://github.com/grails-guides/web-app-step-by-step/tree/master/complete

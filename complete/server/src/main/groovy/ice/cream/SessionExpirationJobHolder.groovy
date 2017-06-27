@@ -9,15 +9,15 @@ import org.springframework.scheduling.annotation.Scheduled
 class SessionExpirationJobHolder {
 
     @Autowired
-    SimpMessagingTemplate brokerMessagingTemplate //This class is provided by the spring-websocket plugin and allows us to push an event over a websocket channel
+    SimpMessagingTemplate brokerMessagingTemplate //<1>
 
-    @Value('${timeout.minutes}') //Loads our timeout.minutes property from application.yml
+    @Value('${timeout.minutes}') //<2>
     Integer timeout
 
-    @Scheduled(cron = "0 * * * * *") //Run every minute
+    @Scheduled(cron = "0 * * * * *") //<3>
     void findExpiredSessions() {
         Date timeoutDate
-        use( TimeCategory ) { //Use Groovy's DSL for time operations
+        use( TimeCategory ) { //<4>
             timeoutDate = new Date() - timeout.minutes
         }
 
@@ -32,7 +32,7 @@ class SessionExpirationJobHolder {
                 user.lastLogin = null //Reset lastLogin date
                 user.save(flush: true)
 
-                //Send a websocket message to a user-specific "channel" for each expired user - we're using their username as the unique key for each channel
+                //<5>
                 brokerMessagingTemplate.convertAndSend "/topic/${user.username}".toString(), "logout"
             }
         }
