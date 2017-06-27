@@ -1,7 +1,7 @@
 gettingStarted: 
-  title: Getting Started
-  requirements: What you will need
-  howto: How to complete the guide
+  title: Introduction
+  requirements: Requirements
+  howto: Following Along
 writingTheApp:
   title: Writing the Application
   grails: Grails
