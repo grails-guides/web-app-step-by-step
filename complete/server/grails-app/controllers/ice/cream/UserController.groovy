@@ -5,8 +5,10 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.plugin.springsecurity.rest.token.AccessToken
 import grails.plugin.springsecurity.rest.token.generation.TokenGenerator
 import grails.plugin.springsecurity.rest.token.rendering.AccessTokenJsonRenderer
+import grails.plugin.springsecurity.userdetails.GrailsUser
 import groovy.transform.CompileStatic
 import org.springframework.http.HttpStatus
+import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 //<1>
@@ -30,8 +32,9 @@ class UserController {
         User user = userService.createUser(cmd.username, cmd.password)
 
         //<3>
-        springSecurityService.reauthenticate(user.username)
-        AccessToken token = tokenGenerator.generateAccessToken(springSecurityService.principal as UserDetails)
+        UserDetails userDetails = new GrailsUser(user.username, user.password, user.enabled, !user.accountExpired,
+                !user.passwordExpired, !user.accountLocked, user.authorities as Collection<GrantedAuthority>, user.id)
+        AccessToken token = tokenGenerator.generateAccessToken(userDetails)
         render status: HttpStatus.OK.value(), accessTokenJsonRenderer.generateJson(token)
     }
 }
