@@ -13,17 +13,14 @@ database.
 
 Let’s recap the steps to install PostgresSQL on your machine:
 
-[quote, Web App, Step by Step -- Mark Volkmann]
+[quote, Web App Step by Step -- Mark Volkmann]
 ____
-To install PostgreSQL in Windows, see https://www.postgresql.org/download/windows/.
-
-To install PostgreSQL in macOS:
-
-Install Homebrew by following the instructions at http://brew.sh/.
-Enter the following: brew install postgresql
-To start the database server, enter `pg_ctl -D /usr/local/var/postgres start`.
-
-To stop the database server later, enter `pg_ctl -D /usr/local/var/postgres stop -m fast`.
+- To install PostgreSQL in Windows, see https://www.postgresql.org/download/windows/.
+- To install PostgreSQL in macOS:
+- Install Homebrew by following the instructions at http://brew.sh/.
+- Enter the following: brew install postgresql
+- To start the database server, enter `pg_ctl -D /usr/local/var/postgres start`.
+- To stop the database server later, enter `pg_ctl -D /usr/local/var/postgres stop -m fast`.
 ____
 
 Once you’ve installed Postgres (or if you already have it installed),

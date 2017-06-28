@@ -2,7 +2,6 @@ package ice.cream
 
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
-import org.springframework.validation.ObjectError
 
 @Transactional
 class UserIceCreamService {
@@ -10,17 +9,17 @@ class UserIceCreamService {
     UserIceCream create(User user, IceCream iceCream, boolean flush = false) { //<1>
         UserIceCream instance = new UserIceCream(user: user, iceCream: iceCream)
         if ( !instance.save(flush: flush) ) { //<2>
-            instance.errors.allErrors.each { ObjectError error ->
-                println(error.toString())
+            instance.errors.allErrors.each {  error ->
+                println error
             }
         }
         instance
     }
 
-    @ReadOnly
-    List<IceCream> findAllIceCreamsByUser(User loggedUser) {
+    @ReadOnly //<2>
+    List<IceCream> findAllIceCreamsByUser(User loggedUser) { //<3>
         UserIceCream.where {
             user == loggedUser
-        }.list()*.iceCream as List<IceCream>
+        }.list()*.iceCream //<4>
     }
 }

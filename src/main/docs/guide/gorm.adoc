@@ -88,7 +88,7 @@ include::{sourceDir}/server/grails-app/domain/ice/cream/UserIceCream.groovy[]
 <1> Because this domain class represents a join table for our `User` and `IceCream`
 classes.
 
-== Package Naming
+=== Package Naming
 
 As is common in Java projects, we have created a “package” for our
 domain classes. Packages help distinguish our classes from classes from
@@ -100,7 +100,7 @@ TIP: Why are we using period instead of dash seprators, as was shown in the http
 In Java it is generally considered against convention to use dashes (hyphen) in package names.
 http://docs.oracle.com/javase/specs/jls/se8/html/jls-6.html#jls-6.1[See this link for details on the Java naming conventions].
 
-== Run the app
+=== Run the app
 
 If you were to start up your app now, Grails will connect to the
 Postgres database, create the tables and columns needed to persist your

@@ -73,8 +73,8 @@ include::{sourceDir}/server/grails-app/controllers/ice/cream/IceCreamController.
 ----
 <1> The `@Secured` annotation specifies the access controls for this controller - authentication & ROLE_USER is required
 <2> In a Grails controller you have access to the request parameters in the `params` object -
-here we are checking for a `max` parameter, using the Groovy ternary operator (or "Elvis" operator)
- `?:` to supply a default max of 10 records, and using the `Math.min` method to limit the maximum
+here we are checking for a `max` parameter, using the Groovy ternary operator `?:` (aka http://mrhaki.blogspot.com/2009/08/groovy-goodness-elvis-operator.html["Elvis" operator])
+ to supply a default max of 10 records, and using the `Math.min` method to limit the maximum
  number of records to 100.
 <3> The `respond` method uses content-negotiation to determine the appropriate format to respond to the request. See the http://docs.grails.org/latest/ref/Controllers/respond.html[Grails documentation for more details.]
 <4> The `render` method responds to the request without content-negotiation - we're using it here when we have no content to return but need to specify an HTTP error status. See the http://docs.grails.org/latest/ref/Controllers/respond.html[Grails documentation for more details.]
@@ -95,27 +95,33 @@ the resulting `IceCreamService.groovy` file with the content below:
 ----
 include::{sourceDir}/server/grails-app/services/ice/cream/IceCreamService.groovy[]
 ----
+//<1> Using GORM's `find` method, we retrieve the `IceCream` instance based on the `flavor`, and if there is none, we create a new one.
+//<2> If for some reason we are unable to save the new `IceCream` instance, we log out any validation errors and return null.
+//<3> Assuming we have retrieved the desired `IceCream`, we call our `create` method on the `UserIceCreamService`, which will save the entry in the `UserIceCream` join table.
+//<4> Removing an `IceCream` instance from a user is fairly simple - we find the matching `UserIceCream` instance and delete it. Note the use of `load` - this is another GORM method that allows us to get a reference to an object without retrieving the entire row from the database.
 
-Thanks to GORM, our persistence code is very expressive and
-self-documenting.
+The `IceCreamService` collaborates with a `UserIceCreamService`,  which
+encapsulates the creation of `UserIceCream` join records.
 
-The previous service collaborates with `UserIceCreamService`  which
-encapsulates the creation of `UserIceCream` domain instances.
+[source,bash]
+----
+~ ./grailsw create-service ice.cream.UserIceCreamService
+----
 
 [source, groovy]
 ./server/grails-app/services/ice/cream/UserIceCreamService.groovy
 ----
 include::{sourceDir}/server/grails-app/services/ice/cream/UserIceCreamService.groovy[]
 ----
-
 <1>  We've defined a `create` method which will create the `UserIceCream` instance for a given
 `User` and `IceCream` instance.
-
-<2> We are using GORM hibernate implementation. "Flush" tells GORM to flush immediately the Hibernate session or whether
-the change can wait till GORM decides to persist the current "session" (possibly along with
-other database updates at the same time). Groovy default method arguments with default values. We are using a default `flush` argument to turn flushing off by default,
+<2> We are using GORM Hibernate implementation, which means we are working with a Hibernate "session". "Flush" tells GORM to immediately flush the session, rather than allowing the framework to decide when to persist the current "session" (possibly along with
+other database updates).  We are using a http://mrhaki.blogspot.com/2009/09/groovy-goodness-parameters-with-default.html[default argument] to turn flushing off by default,
 while allowing the caller to override this and flush immediately if desired. For more details,
 please see the http://gorm.grails.org/latest/hibernate/manual/index.html#savingAndUpdating[GORM documentation.]
+<3> We've created a `findAllIceCreamsByUser` method to retrieve all `IceCream` instances for a given `User`.
+<4> We're using the http://mrhaki.blogspot.com/2009/08/groovy-goodness-spread-dot-operator.html[Groovy "spread" operator] `*.` to retrieve the `iceCream` property from each `UserIceCream` in the `where` query results.
+
 
 Now we need to create a second controller and service to support user
 signups. From the server directory again, run the following commands:
@@ -145,7 +151,7 @@ include::{sourceDir}/server/grails-app/services/ice/cream/UserService.groovy[]
 
 Again, GORM makes creating and saving our new `User` instance a breeze!
 
-== Hyphenated URL formats
+=== Hyphenated URL formats
 
 The last step to completing our API is to update the URL endpoints. In
 the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[previous “Web App” article], all the API endpoints were prefixed by
