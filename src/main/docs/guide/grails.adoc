@@ -33,7 +33,7 @@ code in this article will be written in Groovy.
 
 Every Grails project begins with a single `create-app` command. For the
 purposes of following along with this article, you may choose to install
-Grails via the official website, or using `sdkman` (recommended).
+Grails via the official website, or using http://sdkman.io[sdkman] (recommended).
 However, there is no need to install the framework on your machine to
 create your Grails app - instead, let's browse to
 http://start.grails.org and create our application using the *Grails
