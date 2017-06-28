@@ -1,8 +1,10 @@
 package ice.cream
 
+import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 
 @Slf4j
+@CompileStatic
 class BootStrap {
 
     def init = { servletContext ->
@@ -17,10 +19,15 @@ class BootStrap {
             log.info "Inserted records with ids ${ids.join(',')}"
         }
 
-        if(!Role.list()) {
-            new Role(authority: 'ROLE_USER').save(flush: true)
+        if (!Role.count()) {
+            def role = new Role(authority: 'ROLE_USER').save(flush: true)
             log.info "Inserted role..."
 
+            User user = new User(username: 'sherlock', password: 'secret').save(flush: true)
+            log.info "Inserted user..."
+
+            UserRole.create(user, role, true)
+            log.info "Associated user with role..."
         }
     }
     def destroy = {
