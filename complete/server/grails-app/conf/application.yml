@@ -127,4 +127,19 @@ server:
         keyAlias: tomcat
 
 allowedOrigin: https://localhost:3000 #accepted origin URL for websocket connections
-timeout.minutes: 1 #config setting for timeout
+timeout.minutes: 1 #config setting for timeout---
+environments:
+    test:
+        grails:
+            plugin:
+                springsecurity:
+                    rest:
+                        login:
+                            endpointUrl: /api/login
+---
+#tag::hyphenated[]
+grails:
+    web:
+        url:
+            converter: hyphenated
+#end::hyphenated[]

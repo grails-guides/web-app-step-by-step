@@ -4,10 +4,10 @@ class UrlMappings {
 
     static mappings = {
 
-        delete "/ice-cream/$username/$id"(controller: 'iceCream', action: 'delete')
-        get    "/ice-cream/$username/"(controller: 'iceCream', action: 'index')
-        post   "/ice-cream/$username"(controller: 'iceCream', action: 'save')
-        put    "/ice-cream/$id"(controller: 'iceCream', action: 'update')
+        delete "/$controller/$username/$id"(controller: 'iceCream', action: 'delete')
+        get    "/$controller/$username/"(controller: 'iceCream', action: 'index')
+        post   "/$controller/$username"(controller: 'iceCream', action: 'save')
+        put    "/$controller/$id"(controller: 'iceCream', action: 'update')
         post   "/signup"(controller: 'user', action: 'signup')
         "/"(controller: 'application', action:'index')
         "500"(view: '/error')
