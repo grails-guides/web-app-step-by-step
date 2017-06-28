@@ -5,7 +5,7 @@ class BootStrap {
     def init = { servletContext ->
         println "Loading database..."
 
-        if(!IceCream.list()) {
+        if(!IceCream.count()) {
             def iceCreams = ['vanilla', 'chocolate', 'strawberry'].collect { flavor ->
                 new IceCream(flavor: flavor).save(flush: true)
             }
