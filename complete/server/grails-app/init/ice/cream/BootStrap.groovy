@@ -1,9 +1,12 @@
 package ice.cream
 
+import groovy.util.logging.Slf4j
+
+@Slf4j
 class BootStrap {
 
     def init = { servletContext ->
-        println "Loading database..."
+        log.info "Loading database..."
 
         if(!IceCream.count()) {
             def iceCreams = ['vanilla', 'chocolate', 'strawberry'].collect { flavor ->
@@ -11,13 +14,13 @@ class BootStrap {
             }
 
             def ids = iceCreams*.id
-            println "Inserted records with ids ${ids.join(',')}"
+            log.info "Inserted records with ids ${ids.join(',')}"
         }
 
         if(!Role.list()) {
             new Role(authority: 'ROLE_USER').save(flush: true)
+            log.info "Inserted role..."
 
-            println "Inserted role..."
         }
     }
     def destroy = {
