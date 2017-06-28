@@ -1,5 +1,6 @@
 package ice.cream
 
+import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 
 @Transactional
@@ -11,6 +12,11 @@ class UserService {
 
         UserRole.create(user, role, true)
 
-        return user
+        user
+    }
+
+    @ReadOnly
+    boolean existsUserByUsername(String name) {
+        User.where { username == name }.count()
     }
 }

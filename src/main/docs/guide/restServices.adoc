@@ -8,7 +8,7 @@ application, and manage the communication between the model and the
 view. Controllers respond to _requests_, interact with data from the
 model, and then _respond_ with either a view (HTML page) or some other
 consumable format (such as JSON). Controllers are Groovy classes located
-in `grails-app/controller`
+in `grails-app/controllers`
 2.  *Services*: Many times we need to do more with our data than simply
 take a request and return a response. Real-world apps typically include
 a substantial amount of code dedicated to "business logic". Grails
@@ -17,7 +17,7 @@ model, but are not tied to a request. Controllers, as well as other
 parts of your app, can call services (which are made available via
 Spring’s dependency injection) to get back the data they need to respond
 to their requests. Services are Groovy classes located in
-`grails-app/service` and can be injected by name into other Grails
+`grails-app/services` and can be injected by name into other Grails
 artifacts.
 
 To implement our RESTful API in our app, we'll use controllers to
@@ -99,6 +99,24 @@ include::{sourceDir}/server/grails-app/services/ice/cream/IceCreamService.groovy
 Thanks to GORM, our persistence code is very expressive and
 self-documenting.
 
+The previous service collaborates with `UserIceCreamService`  which
+encapsulates the creation of `UserIceCream` domain instances.
+
+[source, groovy]
+./server/grails-app/services/ice/cream/UserIceCreamService.groovy
+----
+include::{sourceDir}/server/grails-app/services/ice/cream/UserIceCreamService.groovy[]
+----
+
+<1>  We've defined a `create` method which will create the `UserIceCream` instance for a given
+`User` and `IceCream` instance.
+
+<2> We are using GORM hibernate implementation. "Flush" tells GORM to flush immediately the Hibernate session or whether
+the change can wait till GORM decides to persist the current "session" (possibly along with
+other database updates at the same time). Groovy default method arguments with default values. We are using a default `flush` argument to turn flushing off by default,
+while allowing the caller to override this and flush immediately if desired. For more details,
+please see the http://gorm.grails.org/latest/hibernate/manual/index.html#savingAndUpdating[GORM documentation.]
+
 Now we need to create a second controller and service to support user
 signups. From the server directory again, run the following commands:
 
@@ -127,23 +145,19 @@ include::{sourceDir}/server/grails-app/services/ice/cream/UserService.groovy[]
 
 Again, GORM makes creating and saving our new `User` instance a breeze!
 
+==== Hyphenated URL formats
+
 The last step to completing our API is to update the URL endpoints. In
 the previous “Web App” article, all the API endpoints were prefixed by
 `ice-cream/`. By default, Grails uses a camelcase convention for URLs,
-e.g `iceCream/`. Of course we could update our React code to use this
-convention, but instead, let's edit our `UrlMappings.groovy` file and
-specify our customized endpoint format.
+e.g `iceCream/`.
+
+However, Grails allows an easy http://docs.grails.org/latest/guide/single.html#customizingUrlFormat[customization of URL formats].
+
+To achive a hyphenated URL format we need to add the next configuration parameter:
 
 [source,groovy]
-./server/grails-app/controllers/ice/cream/UrlMappings.groovy
+.server/grails-app/conf/application.yml
 ----
-include::{sourceDir}/server/grails-app/controllers/ice/cream/UrlMappings.groovy[]
+include::{sourceDir}/server/grails-app/conf/application.yml[tag=hyphenated]
 ----
-
-
-The format of a typical URL mapping is
-`[HTTP method (optional)] “[url]”([controller, action or URI to map to the URL])`
-As you can see URL mappings accept variables (like `$username`) and
-wildcards (`*`), allowing very flexible routing control. See the
-http://docs.grails.org/latest/guide/theWebLayer.html#urlmappings[Grails
-documentation] for more on URL Mappings.

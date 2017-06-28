@@ -1,13 +1,10 @@
 package ice.cream
 
-class UserIceCream {
+import groovy.transform.CompileStatic
+
+@CompileStatic
+class UserIceCream { // <1>
 
     User user
     IceCream iceCream
-
-    static UserIceCream create(User user, IceCream iceCream, boolean flush = false) { //<1>
-        def instance = new UserIceCream(user: user, iceCream: iceCream)
-        instance.save(flush: flush) //<2>
-        instance
-    }
 }

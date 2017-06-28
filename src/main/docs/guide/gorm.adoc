@@ -24,7 +24,7 @@ following content:
 [source, yml]
 ./server/grails-app/conf/application.yml
 ----
-include::{sourceDir}/server/grails-app/conf/application.yml[indent=0,lines=81..93]
+include::{sourceDir}/server/grails-app/conf/application.yml[indent=0,tag=postgres]
 ----
 
 Now our Grails app is connected to our database, but we haven’t created
@@ -68,12 +68,17 @@ include::{sourceDir}/server/grails-app/domain/ice/cream/IceCream.groovy[]
 ./server/grails-app/domain/ice/cream/User.groovy
 ----
 package ice.cream
+import grails.compiler.GrailsCompileStatic
 
+@GrailsCompileStatic
 class User {
     String username
     String password
 }
 ----
+
+TIP: You may have noticed we have not encrypted our `password` column
+- don’t worry, we’ll get to that later on.
 
 [source, groovy]
 ./server/grails-app/domain/ice/cream/UserIceCream.groovy
@@ -81,13 +86,9 @@ class User {
 include::{sourceDir}/server/grails-app/domain/ice/cream/UserIceCream.groovy[]
 ----
 <1> Because this domain class represents a join table for our `User` and `IceCream`
-classes, we've defined a static `create` method which will create the `UserIceCream` instance for a given
-`User` and `IceCream` instance.
-<2> "Flush" tells GORM whether to immediately persist changes to the database, or whether
-the change can wait till GORM decides to persist the current "session" (possibly along with
-other database updates at the same time). We are using a default `flush` argument to turn flushing off by default,
-while allowing the caller to override this and flush immediately if desired. For more details,
-please see the http://gorm.grails.org/latest/hibernate/manual/index.html#savingAndUpdating[GORM documentation.]
+classes.
+
+==== Package Naming
 
 As is common in Java projects, we have created a “package” for our
 domain classes. Packages help distinguish our classes from classes from
@@ -99,8 +100,7 @@ TIP: Why are we using period instead of dash seprators, as was doing in the orig
 In Java it is generally considered against convention to use dashes (hyphen) in package names.
 http://docs.oracle.com/javase/specs/jls/se8/html/jls-6.html#jls-6.1[See this link for details on the Java naming conventions].
 
-TIP: You may have noticed we have not encrypted our `password` column
-- don’t worry, we’ll get to that later on.
+==== Run the app
 
 If you were to start up your app now, Grails will connect to the
 Postgres database, create the tables and columns needed to persist your
