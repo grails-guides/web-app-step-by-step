@@ -21,7 +21,7 @@ class SessionExpirationJobHolder {
             timeoutDate = new Date() - timeout.minutes
         }
 
-        User.withNewSession {
+        User.withTransaction {
             List<User> expiredUsers = User.where { //Query for loggedIn users with a lastLogin date after the timeout limit
                 lastLogin != null
                 lastLogin < timeoutDate

@@ -145,16 +145,16 @@ include::{sourceDir}/server/grails-app/services/ice/cream/UserService.groovy[]
 
 Again, GORM makes creating and saving our new `User` instance a breeze!
 
-==== Hyphenated URL formats
+== Hyphenated URL formats
 
 The last step to completing our API is to update the URL endpoints. In
-the previous “Web App” article, all the API endpoints were prefixed by
+the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[previous “Web App” article], all the API endpoints were prefixed by
 `ice-cream/`. By default, Grails uses a camelcase convention for URLs,
 e.g `iceCream/`.
 
-However, Grails allows an easy http://docs.grails.org/latest/guide/single.html#customizingUrlFormat[customization of URL formats].
+Fortunately Grails allows easy http://docs.grails.org/latest/guide/single.html#customizingUrlFormat[customization of URL formats].
 
-To achive a hyphenated URL format we need to add the next configuration parameter:
+To use a hyphenated URL format, all we need to do is add the following configuration variable:
 
 [source,groovy]
 .server/grails-app/conf/application.yml

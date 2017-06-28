@@ -1,6 +1,6 @@
 From the http://grails.org[official website]:
 
-[quote, Grails Website]
+[quote, Grails.org]
 ____
  "Grails is a powerful web
 framework, for the Java platform aimed at multiplying developers’
@@ -20,6 +20,8 @@ framework goes the extra mile by providing developers with a set of
 sensible, but customizable, defaults, encouraging a "convention over
 configuration" approach to development, while providing a powerful set
 of tools that make developing data-driven web apps fun again.
+
+TIP: Grails 3.x is based on the Spring Boot framework, but includes substantial features and improvements to the developer's experience over a "plain" Spring Boot project. See https://objectcomputing.com/news/2017/06/28/grails-vs-spring-boot[this article for more on the differences between Grails & Spring Boot].
 
 Much of Grails' "magic" comes from its use of the Groovy programming
 language. From the http://www.groovy-lang.org[official website], Groovy
@@ -56,7 +58,7 @@ your choice, `cd` into the project, and run the following two commands
 ----
 
 The `gradlew` command launches the Gradle "wrapper”, which is provided
-by the Gradle build tool that is used in all Grails projects since Grails 3.0.
+by the https://gradle.org/[Gradle build tool] that is used in all Grails projects since Grails 3.0.
 The wrapper is a special script that actually download and install the Gradle
 build tool (if necessary) before running your commands. Gradle will then
 download all needed dependencies (including Grails) and install them in your project (caching them for future
@@ -86,12 +88,10 @@ subproject. The `bootRun` task is configured in both projects to start
 the respective app.
 
 
-TIP: Where does `bootRun` come from? Grails 3 is based on the Spring Boot
-framework under the covers, and this framework provides the `bootRun` Gradle task. Of course
-`create-react-app` doesn’t have such a task, however the React profile
-uses the same name for both “startup” tasks for consistency sake, and to
-support advanced features like running both `server` and `client` in
-parallel mode with one command. `../gradlew client:bootRun` is the same
+TIP: Where does `bootRun` come from? This Gradle task is inherited from the Spring Boot framework, upon which Grails is based. Of course
+`create-react-app` projects don’t have such a task by default. The React profile provides the `client:bootRun` task as a wrapper around the npm/yarn `start` script.
+This allows you to use advanced Gradle features like running both `server` and `client` in
+parallel mode with one command. For developers, running `../gradlew client:bootRun` is the same
 as running `npm start` (or `yarn start`) in a stock `create-react-app`
 project, and in fact you can run the `client` app exactly that way if
 you have `npm`/`yarn` installed on your machine.

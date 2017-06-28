@@ -1,5 +1,5 @@
 Now that we have our basic application structure, its’s time to set up
-our database. As in the previous article, we will be using PostgreSQL.
+our database. As in the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[previous article], we will be using PostgreSQL.
 However, it’s worth noting that Grails has already set up a basic
 datasource for us, in the form on an in-memory H2 database. This
 database is destroyed and recreated every time the app is run, and it
@@ -7,13 +7,13 @@ will even be updated during runtime if new tables/columns are added to
 the domain classes (more on those later). For many apps, this default
 database will be very well suited for the initial stages of app
 development, especially if you’re making many iterative changes to your
-data model. However, in keeping with the previous tutorial, we are going
+data model. However, in keeping with the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[previous article], we are going
 to replace this default H2 datasource with our desired PostgreSQL
 database.
 
 Let’s recap the steps to install PostgresSQL on your machine:
 
-[quote, Web App, Step by Step]
+[quote, Web App, Step by Step -- Mark Volkmann]
 ____
 To install PostgreSQL in Windows, see https://www.postgresql.org/download/windows/.
 
@@ -34,7 +34,7 @@ create a new database for our app using `createdb`
 ~ createdb ice_cream
 ----
 
-If you recall in the previous article (where the above installation
+If you recall in the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[previous article] (where the above installation
 steps were taken from), the next steps here would be to create the
 database tables needed for our app. However, we won’t be using any SQL
 in this project. That’s because Grails offers a powerful and

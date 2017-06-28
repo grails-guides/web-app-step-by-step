@@ -39,7 +39,7 @@ include::{sourceDir}/server/src/main/groovy/ice/cream/CustomWebSocketConfig.groo
 include::{sourceDir}/server/src/main/groovy/ice/cream/TokenCreationEventListener.groovy[]
 ----
 <1> We are extending a `ApplicationListener` interface, which is part of the Spring Framework and allows us to "listen" to specific application events. In this case, we are listening for `RestTokenCreationEvent`. You can find other events to listen for in the http://alvarosanchez.github.io/grails-spring-security-rest/latest/docs/#_events[Spring Security REST plugin documentation].
-<2> The `withNewSession` method is needed here because our custom class doesn't have access to GORM by default (unlike controllers and services). The `User` domain class is not actually important - we could use any domain class here. `withNewSession` will initiate a GORM/Hibernate session and allow us to query the database and persist changes. See the http://gorm.grails.org/6.1.x/hibernate/manual/index.html#persistenceBasics[GORM documentation for more details.]
+<2> The `withTransaction` method is needed here because our custom class doesn't have access to GORM by default (unlike controllers and services). The `User` domain class is not actually important - we could use any domain class here. `withNewSession` will initiate a GORM/Hibernate transaction and allow us to query the database and persist changes. See the http://gorm.grails.org/6.1.x/hibernate/manual/index.html#persistenceBasics[GORM documentation for more details.]
 
 [source, groovy]
 ./server/src/main/groovy/ice/cream/SessionExpirationJobHolder.groovy

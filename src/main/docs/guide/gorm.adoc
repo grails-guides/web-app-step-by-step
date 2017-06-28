@@ -16,6 +16,8 @@ from the Maven Central repository, and install it in our app.
 include::{sourceDir}/server/build.gradle[indent=0,lines=59]
 ----
 
+TIP: You can think of `build.gradle` as filling a similar purpose to a `package.json` file in a Node.js project. It specifies https://docs.gradle.org/current/userguide/artifact_dependencies_tutorial.html#sec:repositories_tutorial[repositories], https://docs.gradle.org/current/userguide/artifact_dependencies_tutorial.html#sec:declaring_your_dependencies[dependencies], and https://docs.gradle.org/current/userguide/tutorial_using_tasks.html[custom tasks] (similar to npm scripts) for your project.
+
 Step #2:: Configure GORM to use our PostgreSQL database instead of the default
 H2 database. Edit `server/grails-app/conf/application.yml`, scroll down
 to the section starting with `datasource`, and replace it with the
@@ -30,7 +32,7 @@ include::{sourceDir}/server/grails-app/conf/application.yml[indent=0,tag=postgre
 Now our Grails app is connected to our database, but we haven’t created
 any tables yet. With Grails, there’s no need to create the database
 schema manually (although you certainly can do so if you want). Instead,
-we’ll specify our domain model in code, by writing *Domain Classes*.
+we’ll specify our domain model in code, by writing https://docs.grails.org/latest/ref/Domain%20Classes/Usage.html[*Domain Classes*].
 
 By convention, Grails will load any Groovy classes located under
 `grails-app/domain` as Domain Classes. This means that GORM will map
@@ -40,7 +42,7 @@ create these tables for us, which we have already enabled in our
 `application.yml` file with the `dbCreate: update` setting.
 
 This means it’s actually quite trivial to set up the database schema
-from the previous application. For each of the tables we need in our
+from the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[original article]. For each of the tables we need in our
 app, we will create a domain class under the `grails-app/domain`
 directory.
 
@@ -88,7 +90,7 @@ include::{sourceDir}/server/grails-app/domain/ice/cream/UserIceCream.groovy[]
 <1> Because this domain class represents a join table for our `User` and `IceCream`
 classes.
 
-==== Package Naming
+== Package Naming
 
 As is common in Java projects, we have created a “package” for our
 domain classes. Packages help distinguish our classes from classes from
@@ -96,11 +98,11 @@ libraries or plugins that we might use later. The package is reflected
 in the directory structure as well: these two files will be created
 under `grails-app/domain/ice/cream/`.
 
-TIP: Why are we using period instead of dash seprators, as was doing in the original article?
+TIP: Why are we using period instead of dash seprators, as was shown in the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[previous article]?
 In Java it is generally considered against convention to use dashes (hyphen) in package names.
 http://docs.oracle.com/javase/specs/jls/se8/html/jls-6.html#jls-6.1[See this link for details on the Java naming conventions].
 
-==== Run the app
+== Run the app
 
 If you were to start up your app now, Grails will connect to the
 Postgres database, create the tables and columns needed to persist your
@@ -126,7 +128,7 @@ your project (both your own code as well as any dependencies) and run
 any Groovy code you'd like.
 
 The following code will show how to accomplish the database operations
-from the previous "Web App" article, using GORM and the Groovy language:
+from the previous https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step["Web App" article], using GORM and the Groovy language:
 
 [source,groovy]
 ----
