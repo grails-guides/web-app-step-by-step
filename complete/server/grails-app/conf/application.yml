@@ -84,6 +84,14 @@ dataSource:
 
 environments:
     development:
+        server:
+            port: 8443
+            ssl:              #HTTPS configuration
+                enabled: true
+                key-store: /Users/zak/Dev/OCI/temp/keystore.p12
+                key-store-password: password
+                keyStoreType: PKCS12
+                keyAlias: tomcat
         dataSource:
             dbCreate: create-drop
             driverClassName: org.postgresql.Driver
@@ -123,15 +131,6 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
-server:
-    port: 8443
-    ssl:              #HTTPS configuration
-        enabled: true
-        key-store: /Users/zak/Dev/OCI/temp/keystore.p12
-        key-store-password: password
-        keyStoreType: PKCS12
-        keyAlias: tomcat
-
 allowedOrigin: https://localhost:3000 #accepted origin URL for websocket connections
 timeout.minutes: 1 #config setting for timeout---
 environments:
