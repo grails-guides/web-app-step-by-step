@@ -35,10 +35,7 @@ class IceCreamService {
     }
 
     Boolean removeIceCreamFromUser(User userEntity, Long id, boolean flush = false) {
-        IceCream iceCreamEntity = IceCream.get(id)
-        if ( !iceCreamEntity ) {
-            return false
-        }
+        IceCream iceCreamEntity = IceCream.load(id)
         UserIceCream.where { user == userEntity && iceCream == iceCreamEntity }.get()?.delete(flush: flush)
         true
     }
