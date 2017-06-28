@@ -101,7 +101,7 @@ environments:
             dialect: org.hibernate.dialect.PostgreSQLDialect
             username: postgres
             password:
-            url: jdbc:postgresql://localhost:5432/ice_cream_db_2
+            url: jdbc:postgresql://localhost:5432/ice_cream
 #end::postgres[]
     test:
         dataSource:
@@ -136,9 +136,6 @@ environments:
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
 ---
-allowedOrigin: https://localhost:3000 #accepted origin URL for websocket connections
-timeout.minutes: 1 #config setting for timeout
----
 environments:
     test:
         grails:
@@ -154,3 +151,8 @@ grails:
         url:
             converter: hyphenated
 #end::hyphenated[]
+---
+#tag::config[]
+allowedOrigin: https://localhost:3000 #accepted origin URL for websocket connections
+timeout.minutes: 1 #config setting for timeout
+#end::config[]

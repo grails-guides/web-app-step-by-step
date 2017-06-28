@@ -6,13 +6,11 @@ import grails.plugin.springsecurity.rest.token.AccessToken
 import grails.plugin.springsecurity.rest.token.generation.TokenGenerator
 import grails.plugin.springsecurity.rest.token.rendering.AccessTokenJsonRenderer
 import grails.plugin.springsecurity.userdetails.GrailsUser
-import groovy.transform.CompileStatic
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 //<1>
-@CompileStatic
 @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
 class UserController {
     static responseFormats = ['json', 'xml']

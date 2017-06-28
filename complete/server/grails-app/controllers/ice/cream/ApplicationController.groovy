@@ -3,9 +3,7 @@ package ice.cream
 import grails.core.GrailsApplication
 import grails.util.Environment
 import grails.plugins.*
-import groovy.transform.CompileStatic
 
-@CompileStatic
 class ApplicationController implements PluginManagerAware {
 
     GrailsApplication grailsApplication

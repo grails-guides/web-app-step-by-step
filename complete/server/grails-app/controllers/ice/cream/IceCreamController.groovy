@@ -3,9 +3,7 @@ package ice.cream
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
-import groovy.transform.CompileStatic
 
-@CompileStatic
 @Secured(['ROLE_USER']) //<1>
 class IceCreamController extends RestfulController {
 
@@ -34,7 +32,7 @@ class IceCreamController extends RestfulController {
     def save(String flavor) {
         User user = springSecurityService.loadCurrentUser() as User
         if ( !user ) {
-            render status: 404
+            render status: 404 //<4>
             return
         }
         def id = iceCreamService.addIceCreamToUser(user, flavor)?.id

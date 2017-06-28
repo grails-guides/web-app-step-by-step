@@ -70,9 +70,7 @@ include::{sourceDir}/server/grails-app/domain/ice/cream/IceCream.groovy[]
 ./server/grails-app/domain/ice/cream/User.groovy
 ----
 package ice.cream
-import grails.compiler.GrailsCompileStatic
 
-@GrailsCompileStatic
 class User {
     String username
     String password
