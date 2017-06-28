@@ -8,7 +8,7 @@ application, and manage the communication between the model and the
 view. Controllers respond to _requests_, interact with data from the
 model, and then _respond_ with either a view (HTML page) or some other
 consumable format (such as JSON). Controllers are Groovy classes located
-in `grails-app/controller`
+in `grails-app/controllers`
 2.  *Services*: Many times we need to do more with our data than simply
 take a request and return a response. Real-world apps typically include
 a substantial amount of code dedicated to "business logic". Grails
@@ -17,7 +17,7 @@ model, but are not tied to a request. Controllers, as well as other
 parts of your app, can call services (which are made available via
 Spring’s dependency injection) to get back the data they need to respond
 to their requests. Services are Groovy classes located in
-`grails-app/service` and can be injected by name into other Grails
+`grails-app/services` and can be injected by name into other Grails
 artifacts.
 
 To implement our RESTful API in our app, we'll use controllers to
