@@ -99,6 +99,24 @@ include::{sourceDir}/server/grails-app/services/ice/cream/IceCreamService.groovy
 Thanks to GORM, our persistence code is very expressive and
 self-documenting.
 
+The previous service collaborates with `UserIceCreamService`  which
+encapsulates the creation of `UserIceCream` domain instances.
+
+[source, groovy]
+./server/grails-app/services/ice/cream/UserIceCreamService.groovy
+----
+include::{sourceDir}/server/grails-app/services/ice/cream/UserIceCreamService.groovy[]
+----
+
+<1>  We've defined a `create` method which will create the `UserIceCream` instance for a given
+`User` and `IceCream` instance.
+
+<2> We are using GORM hibernate implementation. "Flush" tells GORM to flush immediately the Hibernate session or whether
+the change can wait till GORM decides to persist the current "session" (possibly along with
+other database updates at the same time). Groovy default method arguments with default values. We are using a default `flush` argument to turn flushing off by default,
+while allowing the caller to override this and flush immediately if desired. For more details,
+please see the http://gorm.grails.org/latest/hibernate/manual/index.html#savingAndUpdating[GORM documentation.]
+
 Now we need to create a second controller and service to support user
 signups. From the server directory again, run the following commands:
 
