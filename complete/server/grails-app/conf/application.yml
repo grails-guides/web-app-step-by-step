@@ -81,22 +81,28 @@ hibernate:
 dataSource:
     pooled: true
     jmxExport: true
-    driverClassName: org.postgresql.Driver
-    dialect: org.hibernate.dialect.PostgreSQLDialect
-    username: dev
-    password: password
 
 environments:
     development:
         dataSource:
-            dbCreate: update
+            dbCreate: create-drop
+            driverClassName: org.postgresql.Driver
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            username: postgres
+            password:
             url: jdbc:postgresql://localhost:5432/ice_cream_db_2
     test:
         dataSource:
-            dbCreate: update
+            driverClassName: org.h2.Driver
+            username: sa
+            password: ''
+            dbCreate: create-drop
             url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     production:
         dataSource:
+            driverClassName: org.h2.Driver
+            username: sa
+            password: ''
             dbCreate: none
             url: jdbc:h2:./prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
             properties:
