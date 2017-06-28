@@ -84,6 +84,7 @@ dataSource:
 
 environments:
     development:
+#tag::ssl[]
         server:
             port: 8443
             ssl:              #HTTPS configuration
@@ -92,6 +93,7 @@ environments:
                 key-store-password: password
                 keyStoreType: PKCS12
                 keyAlias: tomcat
+#end::ssl[]
         dataSource:
             dbCreate: create-drop
             driverClassName: org.postgresql.Driver

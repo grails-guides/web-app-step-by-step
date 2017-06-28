@@ -29,12 +29,12 @@ When deploying to a server like Tomcat, it is necessary to use the Java KeyStore
 ====
 
 To configure Grails to use our SSL certification, update the
-`application.yml` config file with the following lines at the end:
+`application.yml` config file with the following lines:
 
 [source, groovy]
 ./server/grails-app/conf/application.yml
 ----
-include::{sourceDir}/server/grails-app/conf/application.yml[indent=0,lines=120-127]
+include::{sourceDir}/server/grails-app/conf/application.yml[indent=0,tag=ssl]
 ----
 
 TIP: In Java apps it is more typical to use port 8443 for HTTPS
