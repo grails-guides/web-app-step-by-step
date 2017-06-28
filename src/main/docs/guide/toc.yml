@@ -1,7 +1,9 @@
 gettingStarted: 
   title: Introduction
+requirements: Requirements		
+  howto: Following Along		
 writingTheApp:
-  title: Writing the Grails Application
+  title: Writing the Application
   grails: Grails
   datasource: Datasource
   gorm: GORM
