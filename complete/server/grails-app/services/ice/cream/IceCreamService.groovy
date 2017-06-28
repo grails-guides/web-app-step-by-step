@@ -3,8 +3,10 @@ package ice.cream
 import grails.compiler.GrailsCompileStatic
 import grails.gorm.transactions.Transactional
 import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
 import org.springframework.validation.ObjectError
 
+@Slf4j
 @CompileStatic
 @Transactional
 class IceCreamService {

@@ -1,5 +1,6 @@
 package ice.cream
 
+import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
@@ -18,5 +19,12 @@ class UserIceCreamService {
             }
         }
         instance
+    }
+
+    @ReadOnly
+    List<IceCream> findAllIceCreamsByUser(User loggedUser) {
+        UserIceCream.where {
+            user == loggedUser
+        }.list()*.iceCream as List<IceCream>
     }
 }

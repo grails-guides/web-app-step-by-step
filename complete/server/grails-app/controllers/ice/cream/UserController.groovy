@@ -5,10 +5,12 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.plugin.springsecurity.rest.token.AccessToken
 import grails.plugin.springsecurity.rest.token.generation.TokenGenerator
 import grails.plugin.springsecurity.rest.token.rendering.AccessTokenJsonRenderer
+import groovy.transform.CompileStatic
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.userdetails.UserDetails
 
 //<1>
+@CompileStatic
 @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
 class UserController {
     static responseFormats = ['json', 'xml']
@@ -18,22 +20,21 @@ class UserController {
     AccessTokenJsonRenderer accessTokenJsonRenderer
     SpringSecurityService springSecurityService
 
-    def signup() {
-        def json = request.JSON
-        def username = json.username
-        def password = json.password
+    def signup(SignupCommand cmd) {
+        String username = cmd.username
+        String password = cmd.password
 
         //<2>
-        if (User.findByUsername(username)) {
+        if ( userService.existsUserByUsername(username) ) {
             render status: HttpStatus.UNPROCESSABLE_ENTITY.value(), "duplicate key"
-        } else {
-            User user = userService.createUser(username, password)
-
-            //<3>
-            springSecurityService.reauthenticate(user.username)
-            AccessToken token = tokenGenerator.generateAccessToken(springSecurityService.principal as UserDetails)
-            render status: HttpStatus.OK.value(), accessTokenJsonRenderer.generateJson(token)
-
+            return
         }
+
+        User user = userService.createUser(username, password)
+
+        //<3>
+        springSecurityService.reauthenticate(user.username)
+        AccessToken token = tokenGenerator.generateAccessToken(springSecurityService.principal as UserDetails)
+        render status: HttpStatus.OK.value(), accessTokenJsonRenderer.generateJson(token)
     }
 }
