@@ -94,6 +94,7 @@ environments:
                 keyStoreType: PKCS12
                 keyAlias: tomcat
 #end::ssl[]
+#tag::postgres[]
         dataSource:
             dbCreate: create-drop
             driverClassName: org.postgresql.Driver
@@ -101,6 +102,7 @@ environments:
             username: postgres
             password:
             url: jdbc:postgresql://localhost:5432/ice_cream_db_2
+#end::postgres[]
     test:
         dataSource:
             driverClassName: org.h2.Driver

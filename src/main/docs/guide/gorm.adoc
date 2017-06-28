@@ -24,7 +24,7 @@ following content:
 [source, yml]
 ./server/grails-app/conf/application.yml
 ----
-include::{sourceDir}/server/grails-app/conf/application.yml[indent=0,lines=81..93]
+include::{sourceDir}/server/grails-app/conf/application.yml[indent=0,tag=postgres]
 ----
 
 Now our Grails app is connected to our database, but we haven’t created
@@ -68,7 +68,9 @@ include::{sourceDir}/server/grails-app/domain/ice/cream/IceCream.groovy[]
 ./server/grails-app/domain/ice/cream/User.groovy
 ----
 package ice.cream
+import grails.compiler.GrailsCompileStatic
 
+@GrailsCompileStatic
 class User {
     String username
     String password
