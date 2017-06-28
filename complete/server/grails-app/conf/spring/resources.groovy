@@ -5,7 +5,7 @@ import ice.cream.UserPasswordEncoderListener
 
 // Place your Spring DSL code here
 beans = {
-    userPasswordEncoderListener(UserPasswordEncoderListener, ref('hibernateDatastore')) //<1>
+    userPasswordEncoderListener(UserPasswordEncoderListener) //<1>
     webSocketConfig(CustomWebSocketConfig)                 //<2>
     tokenCreationEventListener(TokenCreationEventListener) //<3>
     sessionExpirationJobHolder(SessionExpirationJobHolder) //<4>
