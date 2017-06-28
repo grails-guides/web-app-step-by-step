@@ -21,16 +21,13 @@ class UserController {
     SpringSecurityService springSecurityService
 
     def signup(SignupCommand cmd) {
-        String username = cmd.username
-        String password = cmd.password
-
         //<2>
-        if ( userService.existsUserByUsername(username) ) {
+        if ( userService.existsUserByUsername(cmd.username) ) {
             render status: HttpStatus.UNPROCESSABLE_ENTITY.value(), "duplicate key"
             return
         }
 
-        User user = userService.createUser(username, password)
+        User user = userService.createUser(cmd.username, cmd.password)
 
         //<3>
         springSecurityService.reauthenticate(user.username)
