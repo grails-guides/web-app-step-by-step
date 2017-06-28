@@ -75,6 +75,9 @@ class User {
 }
 ----
 
+TIP: You may have noticed we have not encrypted our `password` column
+- don’t worry, we’ll get to that later on.
+
 [source, groovy]
 ./server/grails-app/domain/ice/cream/UserIceCream.groovy
 ----
@@ -99,8 +102,6 @@ TIP: Why are we using period instead of dash seprators, as was doing in the orig
 In Java it is generally considered against convention to use dashes (hyphen) in package names.
 http://docs.oracle.com/javase/specs/jls/se8/html/jls-6.html#jls-6.1[See this link for details on the Java naming conventions].
 
-TIP: You may have noticed we have not encrypted our `password` column
-- don’t worry, we’ll get to that later on.
 
 If you were to start up your app now, Grails will connect to the
 Postgres database, create the tables and columns needed to persist your
