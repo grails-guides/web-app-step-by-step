@@ -39,5 +39,7 @@ logged out (you can change this duration in the Grails’ app’s
 different users at different times, each user will be logged out
 separately only when their own session expires.
 
+image::app.png[Ice Cream App]
+
 Congratulations! You’ve got the Ice Cream app running with a Grails
 backend.
