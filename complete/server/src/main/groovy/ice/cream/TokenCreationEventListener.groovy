@@ -7,7 +7,7 @@ class TokenCreationEventListener implements ApplicationListener<RestTokenCreatio
 
     void onApplicationEvent(RestTokenCreationEvent event) { //<1>
 
-        User.withNewSession { //<2>
+        User.withTransaction { //<2>
             User user = User.where { username == event.principal.username }.first()
             user.lastLogin = new Date()
             user.save(flush: true)

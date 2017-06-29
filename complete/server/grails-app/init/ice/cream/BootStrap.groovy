@@ -5,7 +5,7 @@ class BootStrap {
     def init = { servletContext ->
         println "Loading database..."
 
-        if(!IceCream.list()) {
+        if (!IceCream.count()) {
             def iceCreams = ['vanilla', 'chocolate', 'strawberry'].collect { flavor ->
                 new IceCream(flavor: flavor).save(flush: true)
             }
@@ -14,9 +14,8 @@ class BootStrap {
             println "Inserted records with ids ${ids.join(',')}"
         }
 
-        if(!Role.list()) {
+        if (!Role.count()) {
             new Role(authority: 'ROLE_USER').save(flush: true)
-
             println "Inserted role..."
         }
     }

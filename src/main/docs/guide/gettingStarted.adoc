@@ -1,11 +1,11 @@
 In the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[April 2017 issue of SETT], my colleague https://github.com/mvolkmann[Mark Volkmann] laid out a
 detailed blueprint for developing a modern web application, from
 beginning to end. In this article, we will demonstrate how to develop
-the same web app, using the Grails framework. The only explicit
+the same web app, using the https://grails.org[Grails framework]. The only explicit
 technology change we will be making will be the use of Grails over
 Node/express for the backend - otherwise we will use the same stack,
-including React and PostgresSQL. However, we will see how Grails
-simplifies and accelerates the development process and makes developers
+including https://facebook.github.io/react/[React] and https://www.postgresql.org/[PostgreSQL]. We will demonstrate similar features included token-based authentication, REST services, and websockets.
+Hopefully, we will see how Grails simplifies and accelerates the development process and makes developers
 more productive without giving up finer grain control where needed.
 
 The emphasis of this article will not be so much learning how the
@@ -14,3 +14,5 @@ productivity_. In addition, we will refer readers to Mark’s article for
 details on the implementation of the React application, as there we will
 be using almost the exact same code (any changes will be highlighted and
 explained).
+
+TIP: This article is based on an upcoming https://guides.grails.org[Grails Guide] (not available as of the time of publishing) by the same name: http://guides.grails.org/web-app-step-by-step[Web App, Step by Step]. The Grails Guide will include further code samples and unit/integration tests for readers who would like to see more advanced techniques and best practices using Grails.

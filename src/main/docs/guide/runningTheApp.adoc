@@ -21,6 +21,16 @@ The app is running at:
   https://localhost:3000/
 ----
 
+Follow the steps below (from the previous article) to configure your browser to trust the self-signed SSL certificate:
+
+[quote, Web App Step by Step -- Mark Volkmann]
+____
+- Tell the browser to always trust the self-signed certificate by browsing https://localhost
+- In Chrome, click "ADVANCED" and then "Proceed to localhost (unsafe)".
+- In Firefox, press the "Advanced" button, press the "Add Exception..." button, and press the "Confirm Security Exception" button.
+- In Safari, press "Show Certificate" button, select "Always Trust" in the "When using this certificate" dropdown, press the "Continue" button, and enter your password to confirm this action.
+____
+
 You should be able to browser to `https://localhost:3000`, create a new
 user, and login. Try out the app! Add/remove some flavors to your user
 account. After one minute, your user session will end and you’ll be

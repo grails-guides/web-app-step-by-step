@@ -81,22 +81,40 @@ hibernate:
 dataSource:
     pooled: true
     jmxExport: true
-    driverClassName: org.postgresql.Driver
-    dialect: org.hibernate.dialect.PostgreSQLDialect
-    username: dev
-    password: password
 
 environments:
     development:
+#tag::ssl[]
+        server:
+            port: 8443
+            ssl:              #HTTPS configuration
+                enabled: true
+                key-store: /Users/zak/Dev/OCI/temp/keystore.p12
+                key-store-password: password
+                keyStoreType: PKCS12
+                keyAlias: tomcat
+#end::ssl[]
+#tag::postgres[]
         dataSource:
-            dbCreate: update
-            url: jdbc:postgresql://localhost:5432/ice_cream_db_2
+            dbCreate: create-drop
+            driverClassName: org.postgresql.Driver
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            username: postgres
+            password:
+            url: jdbc:postgresql://localhost:5432/ice_cream
+#end::postgres[]
     test:
         dataSource:
-            dbCreate: update
+            driverClassName: org.h2.Driver
+            username: sa
+            password: ''
+            dbCreate: create-drop
             url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     production:
         dataSource:
+            driverClassName: org.h2.Driver
+            username: sa
+            password: ''
             dbCreate: none
             url: jdbc:h2:./prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
             properties:
@@ -117,14 +135,24 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
-server:
-    port: 8443
-    ssl:              #HTTPS configuration
-        enabled: true
-        key-store: /Users/zak/Dev/OCI/temp/keystore.p12
-        key-store-password: password
-        keyStoreType: PKCS12
-        keyAlias: tomcat
-
+---
+environments:
+    test:
+        grails:
+            plugin:
+                springsecurity:
+                    rest:
+                        login:
+                            endpointUrl: /api/login
+---
+#tag::hyphenated[]
+grails:
+    web:
+        url:
+            converter: hyphenated
+#end::hyphenated[]
+---
+#tag::config[]
 allowedOrigin: https://localhost:3000 #accepted origin URL for websocket connections
 timeout.minutes: 1 #config setting for timeout
+#end::config[]

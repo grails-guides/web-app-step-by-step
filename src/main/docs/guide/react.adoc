@@ -1,6 +1,6 @@
 Now we’re ready to turn to the client-side portion of our app. For this
 step, we are going to be using the code found in the Github repo for the
-previous “Web App” article. You can access the code here:
+https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[previous “Web App” article]. You can access the code here:
 https://github.com/mvolkmann/ice-cream-app/tree/master/src
 
 Download (or `git clone`) the source files at the URL above, and copy
@@ -14,7 +14,7 @@ them into the `client/src` directory (overwriting any existing files).
 ----
 
 This will make the `client` subproject identical to the Ice Cream app
-from the previous article.
+from the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[previous article].
 
 Now, let’s delete the files we don’t need.
 
@@ -88,8 +88,8 @@ include::{sourceDir}/client/src/config.js[]
 Now we have to update two of the React components in our Ice Cream app,
 `Login` and `App`.
 
-Edit the `login.js` file as shown below (changes from the original
-version are marked with `//NEW:` comments).
+Edit the `login.js` file as shown below (changes from the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[original
+code] are marked with `//NEW:` comments).
 
 
 [source, javascript]
@@ -100,7 +100,7 @@ include::{sourceDir}/client/src/login.js[]
 
 Finally, we can edit the `App.js` file to support our new websocket
 channels, as well as our `SERVER_URL` config setting. Like above, all
-changes relative to the original code are marked with `NEW` comments.
+changes relative to the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[original code] are marked with `NEW` comments.
 
 [source, javascript]
 ./client/src/App.js

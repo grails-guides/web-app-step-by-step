@@ -8,7 +8,7 @@ application, and manage the communication between the model and the
 view. Controllers respond to _requests_, interact with data from the
 model, and then _respond_ with either a view (HTML page) or some other
 consumable format (such as JSON). Controllers are Groovy classes located
-in `grails-app/controller`
+in `grails-app/controllers`
 2.  *Services*: Many times we need to do more with our data than simply
 take a request and return a response. Real-world apps typically include
 a substantial amount of code dedicated to "business logic". Grails
@@ -17,7 +17,7 @@ model, but are not tied to a request. Controllers, as well as other
 parts of your app, can call services (which are made available via
 Spring’s dependency injection) to get back the data they need to respond
 to their requests. Services are Groovy classes located in
-`grails-app/service` and can be injected by name into other Grails
+`grails-app/services` and can be injected by name into other Grails
 artifacts.
 
 To implement our RESTful API in our app, we'll use controllers to
@@ -73,8 +73,8 @@ include::{sourceDir}/server/grails-app/controllers/ice/cream/IceCreamController.
 ----
 <1> The `@Secured` annotation specifies the access controls for this controller - authentication & ROLE_USER is required
 <2> In a Grails controller you have access to the request parameters in the `params` object -
-here we are checking for a `max` parameter, using the Groovy ternary operator (or "Elvis" operator)
- `?:` to supply a default max of 10 records, and using the `Math.min` method to limit the maximum
+here we are checking for a `max` parameter, using the Groovy ternary operator `?:` (aka http://mrhaki.blogspot.com/2009/08/groovy-goodness-elvis-operator.html["Elvis" operator])
+ to supply a default max of 10 records, and using the `Math.min` method to limit the maximum
  number of records to 100.
 <3> The `respond` method uses content-negotiation to determine the appropriate format to respond to the request. See the http://docs.grails.org/latest/ref/Controllers/respond.html[Grails documentation for more details.]
 <4> The `render` method responds to the request without content-negotiation - we're using it here when we have no content to return but need to specify an HTTP error status. See the http://docs.grails.org/latest/ref/Controllers/respond.html[Grails documentation for more details.]
@@ -127,21 +127,25 @@ include::{sourceDir}/server/grails-app/services/ice/cream/UserService.groovy[]
 
 Again, GORM makes creating and saving our new `User` instance a breeze!
 
+=== Hyphenated URL formats
+
 The last step to completing our API is to update the URL endpoints. In
-the previous “Web App” article, all the API endpoints were prefixed by
+the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[previous “Web App” article], all the API endpoints were prefixed by
 `ice-cream/`. By default, Grails uses a camelcase convention for URLs,
-e.g `iceCream/`. Of course we could update our React code to use this
-convention, but instead, let's edit our `UrlMappings.groovy` file and
-specify our customized endpoint format.
+e.g `iceCream/`.
+
+Fortunately Grails allows easy http://docs.grails.org/latest/guide/single.html#customizingUrlFormat[customization of URL formats].
+
+To use a hyphenated URL format, all we need to do is add the following configuration variable:
 
 [source,groovy]
-./server/grails-app/controllers/ice/cream/UrlMappings.groovy
+.server/grails-app/conf/application.yml
 ----
-include::{sourceDir}/server/grails-app/controllers/ice/cream/UrlMappings.groovy[]
+include::{sourceDir}/server/grails-app/conf/application.yml[tag=hyphenated]
 ----
 
 
-The format of a typical URL mapping is
+TIP: The format of a typical URL mapping is
 `[HTTP method (optional)] “[url]”([controller, action or URI to map to the URL])`
 As you can see URL mappings accept variables (like `$username`) and
 wildcards (`*`), allowing very flexible routing control. See the
