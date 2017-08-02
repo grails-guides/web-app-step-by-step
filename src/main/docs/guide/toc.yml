@@ -1,7 +1,7 @@
-gettingStarted: 
+gettingStarted:
   title: Introduction
-requirements: Requirements		
-  howto: Following Along		
+  requirements: Requirements
+  howto: Following Along
 writingTheApp:
   title: Writing the Application
   grails: Grails
